@@ -5,7 +5,7 @@
 // @include     *hackforums.net/showthread.php?tid=*
 // @require     http://code.jquery.com/jquery-2.2.2.min.js
 // @require     http://cdn.wysibb.com/js/jquery.wysibb.min.js
-// @version     0.1.0
+// @version     0.1.1
 // @grant       GM_getValue
 // ==/UserScript==
 
@@ -140,4 +140,8 @@ var wbbOpt = {
     }
 }
 
-$("#message, #message_new").wysibb(wbbOpt);
+$("#message").wysibb(wbbOpt);
+$(".wysibb-text-editor").attr("autocomplete", "off");
+$(".wysibb-text-editor").attr("autocorrect", "off");
+$(".wysibb-text-editor").attr("autocapitalize", "off");
+$(".wysibb-text-editor").attr("spellcheck", "false");
