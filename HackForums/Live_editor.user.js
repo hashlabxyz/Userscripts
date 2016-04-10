@@ -5,13 +5,14 @@
 // @include     *hackforums.net/showthread.php?tid=*
 // @require     http://code.jquery.com/jquery-2.2.2.min.js
 // @require     http://cdn.wysibb.com/js/jquery.wysibb.min.js
-// @version     0.1.1
+// @version     0.1.2
 // @grant       GM_getValue
 // ==/UserScript==
 
 
 $("body").append("<link rel='stylesheet' type='text/css' href='http://cdn.wysibb.com/css/default/wbbtheme.css' /><link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css'><style>.wysibb-text, .wysibb-toolbar-container, #wbbmodal { color: #282828 !important; } .fa-2x { font-size: 1.5em; margin-top: 6px; } .fa-skype { padding-left: 4px; }</style>");
 
+wbbdebug = false;
 
 var wbbOpt = {
     hotkeys: false, 
@@ -116,7 +117,7 @@ var wbbOpt = {
 		},
         quote: {
             transform : { 
-                '<blockquote>{SELTEXT}</blockquote><cite>AUTHOR - PID</cite>':"[quote='AUTHOR' pid='PID']{SELTEXT}[/quote]"
+                '<blockquote><cite>AUTHOR Wrote: POST_ID</cite>{SELTEXT}</blockquote>':"[quote='AUTHOR' pid='PID']{SELTEXT}[/quote]"
             }
         },
         skype: {
