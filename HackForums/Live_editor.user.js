@@ -5,7 +5,7 @@
 // @include     *hackforums.net/showthread.php?tid=*
 // @require     http://code.jquery.com/jquery-2.2.2.min.js
 // @require     http://cdn.wysibb.com/js/jquery.wysibb.min.js
-// @version     0.1.2
+// @version     0.1.3
 // @grant       GM_getValue
 // ==/UserScript==
 
@@ -18,7 +18,7 @@ var wbbOpt = {
     hotkeys: false, 
     showHotkeys: false,
     
-    buttons: "bold,italic,underline,strike,|,img,video,skype,link,|,bullist,numlist,|,cp,fontsize,fontfamily,|,justifyleft,justifycenter,justifyright,|,quote,code,pmme,spoiler,removeformat",
+    buttons: "bold,italic,underline,strike,|,img,video,skype,link,|,bullist,numlist,|,fontcolor,fontsize,fontfamily,|,justifyleft,justifycenter,justifyright,|,quote,code,pmme,spoiler,removeformat",
     allButtons: {
         video: {
             transform: {
