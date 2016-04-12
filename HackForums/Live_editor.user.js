@@ -5,7 +5,7 @@
 // @include     *hackforums.net/showthread.php?tid=*
 // @require     http://code.jquery.com/jquery-2.2.2.min.js
 // @require     http://cdn.wysibb.com/js/jquery.wysibb.min.js
-// @version     0.1.4
+// @version     0.1.5
 // @grant       GM_getValue
 // ==/UserScript==
 
@@ -44,11 +44,11 @@ var wbbOpt = {
             }
         },
         justifyleft: {
-			transform: {
-				'<p style="text-align:left">{SELTEXT}</p>': '[align=left]{SELTEXT}[/align]'
-			}
-		},
-		justifyright: {
+            transform: {
+                '<p style="text-align:left">{SELTEXT}</p>': '[align=left]{SELTEXT}[/align]'
+            }
+        },
+        justifyright: {
             transform: {
                 '<p style="text-align:right">{SELTEXT}</p>': '[align=right]{SELTEXT}[/align]'
             }
@@ -86,7 +86,7 @@ var wbbOpt = {
         code: {
             buttonHTML: '<i class="fa fa-code fa-2x"></i>', 
             transform : {
-                '<code>{SELTEXT}</code>':"[code]{SELTEXT}[/code]"
+                '<pre>{SELTEXT}</pre>':"[code]{SELTEXT}[/code]"
             }
         },
         pmme: {
@@ -111,10 +111,10 @@ var wbbOpt = {
         spoiler: {
             title: "Insert a spoiler",
             buttonHTML: "<i class='fa fa-folder-open-o fa-2x'></i>",
-			transform : {
+            transform : {
                 '<span class="spoiler">SPOILER_START<br>{SELTEXT}SPOILER_END</span>':'[sp]{SELTEXT}[/sp]'
             }
-		},
+        },
         quote: {
             transform : { 
                 '<blockquote><cite>AUTHOR Wrote: POST_ID</cite>{SELTEXT}</blockquote>':"[quote='AUTHOR' pid='PID']{SELTEXT}[/quote]"
@@ -141,8 +141,10 @@ var wbbOpt = {
     }
 }
 
-$("#message").wysibb(wbbOpt);
-$(".wysibb-text-editor").attr("autocomplete", "off");
-$(".wysibb-text-editor").attr("autocorrect", "off");
-$(".wysibb-text-editor").attr("autocapitalize", "off");
-$(".wysibb-text-editor").attr("spellcheck", "false");
+$(document).ready(function() {
+    $("#message").wysibb(wbbOpt);
+    $(".wysibb-text-editor").attr("autocomplete", "off");
+    $(".wysibb-text-editor").attr("autocorrect", "off");
+    $(".wysibb-text-editor").attr("autocapitalize", "off");
+    $(".wysibb-text-editor").attr("spellcheck", "false");
+});
