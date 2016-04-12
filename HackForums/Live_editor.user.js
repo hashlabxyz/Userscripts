@@ -5,12 +5,12 @@
 // @include     *hackforums.net/showthread.php?tid=*
 // @require     http://code.jquery.com/jquery-2.2.2.min.js
 // @require     http://cdn.wysibb.com/js/jquery.wysibb.min.js
-// @version     0.1.3
+// @version     0.1.4
 // @grant       GM_getValue
 // ==/UserScript==
 
 
-$("body").append("<link rel='stylesheet' type='text/css' href='http://cdn.wysibb.com/css/default/wbbtheme.css' /><link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css'><style>.wysibb-text, .wysibb-toolbar-container, #wbbmodal { color: #282828 !important; } .fa-2x { font-size: 1.5em; margin-top: 6px; } .fa-skype { padding-left: 4px; }</style>");
+$("body").append("<link rel='stylesheet' type='text/css' href='http://cdn.wysibb.com/css/default/wbbtheme.css' /><link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css'><style>.wysibb-text, .wysibb-toolbar-container, #wbbmodal { color: #282828 !important; } .fa-2x { font-size: 1.5em; margin-top: 6px; } .fa-skype { padding-left: 4px; } .wysibb-text-editor a { color: #8A8A8A; }.wysibb-text-editor a:hover { text-decoration: underline; cursor: pointer; color: #8A8A8A !important; }</style>");
 
 wbbdebug = false;
 
@@ -22,7 +22,7 @@ var wbbOpt = {
     allButtons: {
         video: {
             transform: {
-                '<div class="video"><iframe width="560" height="315" src="https://www.youtube.com/embed/{SRC}" frameborder="0" allowfullscreen></iframe></div>':'[video=yt]https://www.youtube.com/watch?v={SRC}[/video]'
+                '<div class="video"><iframe width="560" height="315" src="https://www.youtube.com/embed/{SRC}" frameborder="0" allowfullscreen></iframe></div>':'[video=youtube]https://www.youtube.com/watch?v={SRC}[/video]'
             }
         },
         img : {
