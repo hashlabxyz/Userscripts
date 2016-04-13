@@ -2,15 +2,19 @@
 // @name        WYSIWYG Editor
 // @namespace   Hash G.
 // @description Adds a What you see is what you get editor to HF
+
 // @include     *hackforums.net/showthread.php?tid=*
 // @require     http://code.jquery.com/jquery-2.2.2.min.js
 // @require     http://cdn.wysibb.com/js/jquery.wysibb.min.js
-// @version     0.1.5
+
+// @downloadURL https://github.com/hashlabxyz/Userscripts/raw/master/HackForums/Live_editor.user.js
+// @version     0.1.6
+
 // @grant       GM_getValue
 // ==/UserScript==
 
 
-$("body").append("<link rel='stylesheet' type='text/css' href='http://cdn.wysibb.com/css/default/wbbtheme.css' /><link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css'><style>.wysibb-text, .wysibb-toolbar-container, #wbbmodal { color: #282828 !important; } .fa-2x { font-size: 1.5em; margin-top: 6px; } .fa-skype { padding-left: 4px; } .wysibb-text-editor a { color: #8A8A8A; }.wysibb-text-editor a:hover { text-decoration: underline; cursor: pointer; color: #8A8A8A !important; }</style>");
+$("body").append("<link rel='stylesheet' type='text/css' href='http://cdn.wysibb.com/css/default/wbbtheme.css' /><link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css'><style>.wysibb-text, .wysibb-toolbar-container, #wbbmodal { color: #282828 !important; } .fa-2x { font-size: 1.5em; margin-top: 6px; } .fa-skype { padding-left: 4px; } .wysibb-text-editor a { color: #8A8A8A; }.wysibb-text-editor a:hover { text-decoration: underline; cursor: pointer; color: #8A8A8A !important; } .wbb-emotes .wbb-list .option { display: inline-block; }</style>");
 
 wbbdebug = false;
 
@@ -18,7 +22,7 @@ var wbbOpt = {
     hotkeys: false, 
     showHotkeys: false,
     
-    buttons: "bold,italic,underline,strike,|,img,video,skype,link,|,bullist,numlist,|,fontcolor,fontsize,fontfamily,|,justifyleft,justifycenter,justifyright,|,quote,code,pmme,spoiler,removeformat",
+    buttons: "bold,italic,underline,strike,|,img,video,skype,link,|,bullist,numlist,|,fontcolor,fontsize,fontfamily,|,justifyleft,justifycenter,justifyright,|,emotes,quote,code,pmme,spoiler,removeformat",
     allButtons: {
         video: {
             transform: {
@@ -136,6 +140,191 @@ var wbbOpt = {
             },
             transform: {
                 '<span class="skype"><span class="bitButton"><a href="skype:{USERNAME}?chat"><img src="images/skype.gif"> {USERNAME}</a></span></span>':'[skype]{USERNAME}[/skype]'
+            }
+        },
+		emotes: {
+			type: 'select',
+            title: "Add emotes",
+			options: "emote_pinch,emote_victoire,emote_hehe,emote_oui,emote_pleure,emote_ohmy,emote_blink,emote_superman,emote_nono,emote_biggrin,emote_sad,emote_unsure,emote_glare,emote_roflmao,emote_devlish,emote_rolleyes,emote_cool,emote_gratte,emote_confused,emote_bh,emote_ninja,emote_blush,emote_lipssealed,emote_yeye,emote_non,emote_smile,emote_whistle,emote_sleep,emote_evilgrin,emote_omg,emote_tongue,emote_mad,emote_huh,emote_thumbsup,emote_wacko,emote_pirate"
+		},
+        emote_pinch: {
+            transform: {
+                '<img src="images/smilies/pinch.gif">':':pinch:'
+            }
+        },
+        emote_victoire: {
+            transform: {
+                '<img src="images/smilies/victoire.gif">': ':victoire:'
+            }
+        }, 
+        emote_hehe: {
+            transform: {
+                '<img src="images/smilies/hehe.gif">': ':hehe:'
+            }
+        }, 
+        emote_oui: {
+            transform: {
+                '<img src="images/smilies/oui.gif">': ':oui:'
+            }
+        }, 
+        emote_pleure: {
+            transform: {
+                '<img src="images/smilies/bebe-pleure.gif">': ':bebe-pleure:'
+            }
+        }, 
+        emote_ohmy: {
+            transform: {
+                '<img src="images/smilies/ohmy.gif">': ':ohmy:'
+            }
+        }, 
+        emote_blink: {
+            transform: {
+                '<img src="images/smilies/blink.gif">': ':blink:'
+            }
+        }, 
+        emote_superman: {
+            transform: {
+                '<img src="images/smilies/superman.gif">': ':superman:'
+            }
+        }, 
+        emote_nono: {
+            transform: {
+                '<img src="images/smilies/nono.gif">': ':nono:'
+            }
+        }, 
+        emote_biggrin: {
+            transform: {
+                '<img src="images/smilies/biggrin.gif">': ':biggrin:'
+            }
+        }, 
+        emote_sad: {
+            transform: {
+                '<img src="images/smilies/sad.gif">': ':sad:'
+            }
+        }, 
+        emote_unsure: {
+            transform: {
+                '<img src="images/smilies/unsure.gif">': ':unsure:'
+            }
+        }, 
+        emote_glare: {
+            transform: {
+                '<img src="images/smilies/glare.gif">': ':glare:'
+            }
+        }, 
+        emote_roflmao: {
+            transform: {
+                '<img src="images/smilies/roflmao.gif">': ':roflmao:'
+            }
+        }, 
+        emote_devlish: {
+            transform: {
+                '<img src="images/smilies/devlish.gif">': ':devlish:'
+            }
+        }, 
+        emote_rolleyes: {
+            transform: {
+                '<img src="images/smilies/rolleyes.gif">': ':rolleyes:'
+            }
+        }, 
+        emote_cool: {
+            transform: {
+                '<img src="images/smilies/cool.gif">': ':cool:'
+            }
+        }, 
+        emote_gratte: {
+            transform: {
+                '<img src="images/smilies/gratte.gif">': ':gratte:'
+            }
+        }, 
+        emote_confused: {
+            transform: {
+                '<img src="images/smilies/confused.gif">': ':confused:'
+            }
+        },
+        emote_bh: {
+            transform: {
+                '<img src="images/smilies/blackhat.gif">': ':blackhat:'
+            }
+        }, 
+        emote_ninja: {
+            transform: {
+                '<img src="images/smilies/ninja.gif">': ':ninja:'
+            }
+        }, 
+        emote_blush: {
+            transform: {
+                '<img src="images/smilies/blush.gif">': ':blush:'
+            }
+        }, 
+        emote_lipssealed: {
+            transform: {
+                '<img src="images/smilies/lipssealed.gif">': ':lipssealed:'
+            }
+        }, 
+        emote_yeye: {
+            transform: {
+                '<img src="images/smilies/yeye.gif">': ':yeye:'
+            }
+        }, 
+        emote_non: {
+            transform: {
+                '<img src="images/smilies/non.gif">': ':non:'
+            }
+        }, 
+        emote_smile: {
+            transform: {
+                '<img src="images/smilies/smile.gif">': ':smile:'
+            }
+        }, 
+        emote_whistle: {
+            transform: {
+                '<img src="images/smilies/whistle.gif">': ':whistle:'
+            }
+        }, 
+        emote_sleep: {
+            transform: {
+                '<img src="images/smilies/sleep.gif">': ':sleep:'
+            }
+        }, 
+        emote_evilgrin: {
+            transform: {
+                '<img src="images/smilies/evilgrin.gif">': ':evilgrin:'
+            }
+        }, 
+        emote_omg: {
+            transform: {
+                '<img src="images/smilies/omg.gif">': ':omg:'
+            }
+        }, 
+        emote_tongue: {
+            transform: {
+                '<img src="images/smilies/tongue.gif">': ':tongue:'
+            }
+        }, 
+        emote_mad: {
+            transform: {
+                '<img src="images/smilies/mad.gif">': ':mad:'
+            }
+        }, 
+        emote_huh: {
+            transform: {
+                '<img src="images/smilies/huh.gif">': ':huh:'
+            }
+        }, 
+        emote_thumbsup: {
+            transform: {
+                '<img src="images/smilies/thumbsup.gif">': ':thumbsup:'
+            }
+        }, 
+        emote_wacko: {
+            transform: {
+                '<img src="images/smilies/wacko.gif">': ':wacko:'
+            }
+        }, 
+        emote_pirate: {
+            transform: {
+                '<img src="images/smilies/pirate.gif">': ':pirate:'
             }
         },
     }
