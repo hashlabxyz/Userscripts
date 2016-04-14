@@ -8,7 +8,7 @@
 // @require     http://cdn.wysibb.com/js/jquery.wysibb.min.js
 
 // @downloadURL https://github.com/hashlabxyz/Userscripts/raw/master/HackForums/Live_editor.user.js
-// @version     0.1.6
+// @version     0.1.7
 
 // @grant       GM_getValue
 // ==/UserScript==
@@ -22,7 +22,7 @@ var wbbOpt = {
     hotkeys: false, 
     showHotkeys: false,
     
-    buttons: "bold,italic,underline,strike,|,img,video,skype,link,|,bullist,numlist,|,fontcolor,fontsize,fontfamily,|,justifyleft,justifycenter,justifyright,|,emotes,quote,code,pmme,spoiler,removeformat",
+    buttons: "bold,italic,underline,strike,|,img,video,skype,ig,link,|,bullist,numlist,|,fontcolor,fontsize,fontfamily,|,justifyleft,justifycenter,justifyright,|,emotes,quote,code,pmme,spoiler,removeformat",
     allButtons: {
         video: {
             transform: {
@@ -140,6 +140,24 @@ var wbbOpt = {
             },
             transform: {
                 '<span class="skype"><span class="bitButton"><a href="skype:{USERNAME}?chat"><img src="images/skype.gif"> {USERNAME}</a></span></span>':'[skype]{USERNAME}[/skype]'
+            }
+        },
+        ig: {
+            title: "Add Instagram",
+            buttonHTML: "<i class='fa fa-instagram fa-2x'></i>",
+            modal: {
+                title: "Instagram link",
+                width: "600px",
+                tabs: [
+                  {
+                    input: [ 
+                      {param: "LINK",title:"Instagram Link to photo/video"}
+                    ]
+                  }
+                ],
+            },
+            transform: {
+                '<iframe src="{LINK}embed" height="710" width="612" frameborder="0"></iframe>':"[ig]{LINK}[/ig]"
             }
         },
 		emotes: {
@@ -332,8 +350,16 @@ var wbbOpt = {
 
 $(document).ready(function() {
     $("#message").wysibb(wbbOpt);
+    /*
     $(".wysibb-text-editor").attr("autocomplete", "off");
     $(".wysibb-text-editor").attr("autocorrect", "off");
     $(".wysibb-text-editor").attr("autocapitalize", "off");
     $(".wysibb-text-editor").attr("spellcheck", "false");
+    */
+});
+
+$("body").on("keydown", function(e) {
+   if (e.key === "Tab" || e.keyCode === "9" || e.which === "9") {
+       $("#quick_reply_submit").focus();
+   }
 });
