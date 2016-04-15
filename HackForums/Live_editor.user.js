@@ -8,9 +8,10 @@
 // @require     http://cdn.wysibb.com/js/jquery.wysibb.min.js
 
 // @downloadURL https://github.com/hashlabxyz/Userscripts/raw/master/HackForums/Live_editor.user.js
-// @version     0.1.7
+// @version     0.1.8
 
 // @grant       GM_getValue
+// @grant       GM_setValue
 // ==/UserScript==
 
 
@@ -18,11 +19,47 @@ $("body").append("<link rel='stylesheet' type='text/css' href='http://cdn.wysibb
 
 wbbdebug = false;
 
-var wbbOpt = {
-    hotkeys: false, 
-    showHotkeys: false,
+var settings = {
     
-    buttons: "bold,italic,underline,strike,|,img,video,skype,ig,link,|,bullist,numlist,|,fontcolor,fontsize,fontfamily,|,justifyleft,justifycenter,justifyright,|,emotes,quote,code,pmme,spoiler,removeformat",
+    useHotkeys: GM_getValue("useHotkeys", false),
+    useAutocorrect: GM_getValue("useAutocorrect", false),
+    customButtons: GM_getValue("customButtons", "bold,italic,underline,strike,|,img,video,skype,ig,link,|,bullist,numlist,|,fontcolor,fontsize,fontfamily,|,justifyleft,justifycenter,justifyright,|,emotes,quote,code,pmme,spoiler,removeformat"),
+    
+    HTML: '<tr><td class="thead" colspan="2"><strong>Live Editor settings</strong></td><tr><td class="tcat">Use Hotkeys</td><td class="tcat"><input type="checkbox" name="useHotkeys" /></td></tr><tr><td class="tcat">Use autocorrect</td><td class="tcat"><input type="checkbox" name="useAutocorrect" /></td></tr></tr>',
+    
+    
+    initForm: function() {
+        $("#quick_reply_form table thead tr").after(settings.HTML);
+        $("a[href='#settings']").html("Save settings");
+        
+        if (settings.useHotkeys)
+            $("input[type='checkbox'][name='useHotkeys']").attr("checked", "checked");
+        
+        if (settings.useAutocorrect)
+            $("input[type='checkbox'][name='useAutocorrect']").attr("checked", "checked");
+        
+    },
+    
+    saveForm: function() {
+        $("#quick_reply_form table thead tr input:checked").each(function() {
+            GM_setValue($(this).attr("name"), true);
+        });
+        
+        $("#quick_reply_form table thead tr input:not(:checked)").each(function() {
+            GM_setValue($(this).attr("name"), false);
+        });         
+        
+        $("#quick_reply_form table thead tr:gt(0)").remove();
+        $("a[href='#settings']").html("Live Editor Settings");
+    }
+}
+
+
+var wbbOpt = {
+    hotkeys: settings.useHotkeys, 
+    showHotkeys: settings.useHotkeys,
+    
+    buttons: settings.customButtons,
     allButtons: {
         video: {
             transform: {
@@ -350,16 +387,31 @@ var wbbOpt = {
 
 $(document).ready(function() {
     $("#message").wysibb(wbbOpt);
-    /*
-    $(".wysibb-text-editor").attr("autocomplete", "off");
-    $(".wysibb-text-editor").attr("autocorrect", "off");
-    $(".wysibb-text-editor").attr("autocapitalize", "off");
-    $(".wysibb-text-editor").attr("spellcheck", "false");
-    */
-});
-
-$("body").on("keydown", function(e) {
-   if (e.key === "Tab" || e.keyCode === "9" || e.which === "9") {
-       $("#quick_reply_submit").focus();
-   }
+    
+    $("#quick_reply_form table thead td").append("<a class='smalltext float_right' href='#settings'>Live Editor Settings</a>");
+    
+    if (settings.useAutocorrect === false) {
+        $(".wysibb-text-editor").attr("autocomplete", "off");
+        $(".wysibb-text-editor").attr("autocorrect", "off");
+        $(".wysibb-text-editor").attr("autocapitalize", "off");
+        $(".wysibb-text-editor").attr("spellcheck", "false");
+    }
+    
+    $("a[href='#settings']").on("click", function(e) {
+        e.preventDefault();
+        
+        if ($("input[type='checkbox'][name='useHotkeys']").length === 0) {
+            settings.initForm();
+        } else {
+            settings.saveForm();
+        }
+        
+        return false;
+    });
+    
+    $("body").on("keydown", function(e) {
+        if (e.key === "Tab" || e.keyCode === "9" || e.which === "9") {
+            $("#quick_reply_submit").focus();
+        }
+    });
 });
