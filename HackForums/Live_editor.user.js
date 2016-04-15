@@ -23,7 +23,7 @@ var settings = {
     
     useHotkeys: GM_getValue("useHotkeys", false),
     useAutocorrect: GM_getValue("useAutocorrect", false),
-    customButtons: GM_getValue("customButtons", "bold,italic,underline,strike,|,img,video,skype,ig,link,|,bullist,numlist,|,fontcolor,fontsize,fontfamily,|,justifyleft,justifycenter,justifyright,|,emotes,quote,code,pmme,spoiler,removeformat"),
+    customButtons: GM_getValue("customButtons", "bold,italic,underline,strike,hr,|,img,video,skype,ig,link,|,bullist,numlist,|,fontcolor,fontsize,fontfamily,|,justifyleft,justifycenter,justifyright,|,emotes,quote,code,pmme,spoiler,removeformat"),
     
     HTML: '<tr><td class="thead" colspan="2"><strong>Live Editor settings</strong></td><tr><td class="tcat">Use Hotkeys</td><td class="tcat"><input type="checkbox" name="useHotkeys" /></td></tr><tr><td class="tcat">Use autocorrect</td><td class="tcat"><input type="checkbox" name="useAutocorrect" /></td></tr></tr>',
     
@@ -195,6 +195,13 @@ var wbbOpt = {
             },
             transform: {
                 '<iframe src="{LINK}embed" height="710" width="612" frameborder="0"></iframe>':"[ig]{LINK}[/ig]"
+            }
+        },
+        hr: {
+            title: "Insert a divider",
+            buttonHTML: "<i class='fa fa-ellipsis-h fa-2x'></i>",
+            transform: {
+                '<hr>':"[hr]"
             }
         },
 		emotes: {
