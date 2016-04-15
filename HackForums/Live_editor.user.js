@@ -8,7 +8,7 @@
 // @require     http://cdn.wysibb.com/js/jquery.wysibb.min.js
 
 // @downloadURL https://github.com/hashlabxyz/Userscripts/raw/master/HackForums/Live_editor.user.js
-// @version     0.1.8
+// @version     0.1.9
 
 // @grant       GM_getValue
 // @grant       GM_setValue
@@ -53,7 +53,6 @@ var settings = {
         $("a[href='#settings']").html("Live Editor Settings");
     }
 }
-
 
 var wbbOpt = {
     hotkeys: settings.useHotkeys, 
@@ -420,5 +419,14 @@ $(document).ready(function() {
         if (e.key === "Tab" || e.keyCode === "9" || e.which === "9") {
             $("#quick_reply_submit").focus();
         }
+    });
+    
+    $("#quick_reply_submit").on("click", function() {
+        $("#posts").bind("DOMNodeInserted", function(e) {
+            if (e.target.tagName === "DIV") {
+                $("#message").val("");
+                $(".wysibb-text-editor").empty();
+            }
+        });
     });
 });
