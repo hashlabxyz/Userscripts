@@ -14,7 +14,6 @@
 // @grant       GM_setValue
 // ==/UserScript==
 
-
 $("body").append("<link rel='stylesheet' type='text/css' href='http://cdn.wysibb.com/css/default/wbbtheme.css' /><link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css'><style>.wysibb-text, .wysibb-toolbar-container, #wbbmodal { color: #282828 !important; } .fa-2x { font-size: 1.5em; margin-top: 6px; } .fa-skype { padding-left: 4px; } .wysibb-text-editor a { color: #8A8A8A; }.wysibb-text-editor a:hover { text-decoration: underline; cursor: pointer; color: #8A8A8A !important; } .wbb-emotes .wbb-list .option { display: inline-block; }</style>");
 
 wbbdebug = false;
