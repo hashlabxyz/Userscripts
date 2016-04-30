@@ -1,5 +1,5 @@
 // ==UserScript==
-// @name        WYSIWYG Editor
+// @name        Live post editor (WYSIWYG editor)
 // @namespace   Hash G.
 // @description Adds a What you see is what you get editor to HF
 
@@ -8,23 +8,23 @@
 // @require     http://cdn.wysibb.com/js/jquery.wysibb.min.js
 
 // @downloadURL https://github.com/hashlabxyz/Userscripts/raw/master/HackForums/Live_editor.user.js
-// @version     0.1.9
+// @version     0.1.10
 
 // @grant       GM_getValue
 // @grant       GM_setValue
 // ==/UserScript==
 
-$("body").append("<link rel='stylesheet' type='text/css' href='http://cdn.wysibb.com/css/default/wbbtheme.css' /><link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css'><style>.wysibb-text, .wysibb-toolbar-container, #wbbmodal { color: #282828 !important; } .fa-2x { font-size: 1.5em; margin-top: 6px; } .fa-skype { padding-left: 4px; } .wysibb-text-editor a { color: #8A8A8A; }.wysibb-text-editor a:hover { text-decoration: underline; cursor: pointer; color: #8A8A8A !important; } .wbb-emotes .wbb-list .option { display: inline-block; }</style>");
+$("body").append("<link rel='stylesheet' type='text/css' href='http://cdn.wysibb.com/css/default/wbbtheme.css' /><link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css'><style>.wysibb-text, .wysibb-toolbar-container, #wbbmodal { color: #282828 !important; } .fa-2x { font-size: 1.5em; margin-top: 7px; padding-left: 4px; } .wysibb-text-editor a { color: #8A8A8A; }.wysibb-text-editor a:hover { text-decoration: underline; cursor: pointer; color: #8A8A8A !important; } .wbb-emotes .wbb-list .option { display: inline-block; } .tcat .fa { color: #fff; cursor: pointer; padding: 0px 9px 5px 9px; } .fa-disabled { color: #7B7B7B !important; }</style>");
 
 wbbdebug = false;
 
 var settings = {
     
     useHotkeys: GM_getValue("useHotkeys", false),
-    useAutocorrect: GM_getValue("useAutocorrect", false),
+    useAutocorrect: GM_getValue("useAutocorrect", true),
     customButtons: GM_getValue("customButtons", "bold,italic,underline,strike,hr,|,img,video,skype,ig,link,|,bullist,numlist,|,fontcolor,fontsize,fontfamily,|,justifyleft,justifycenter,justifyright,|,emotes,quote,code,pmme,spoiler,removeformat"),
     
-    HTML: '<tr><td class="thead" colspan="2"><strong>Live Editor settings</strong></td><tr><td class="tcat">Use Hotkeys</td><td class="tcat"><input type="checkbox" name="useHotkeys" /></td></tr><tr><td class="tcat">Use autocorrect</td><td class="tcat"><input type="checkbox" name="useAutocorrect" /></td></tr></tr>',
+    HTML: '<tr><tr><td class="tcat">Use Hotkeys</td><td class="tcat"><input type="checkbox" name="useHotkeys" /></td></tr><tr><td class="tcat">Use autocorrect</td><td class="tcat"><input type="checkbox" name="useAutocorrect" /></td></tr><tr><td class="tcat">Customize buttons: <span style="font-size: 9px; font-style: italic; cursor: pointer;" id="resetCustomButtons">(reset)</span></td><td class="tcat"><i class="fa fa-bold fa-2x fa-disabled" data-bbName="bold"></i><i class="fa fa-italic fa-2x fa-disabled" data-bbName="italic"></i><i class="fa fa-underline fa-2x fa-disabled" data-bbName="underline"></i><i class="fa fa-strikethrough fa-2x fa-disabled" data-bbName="strike"></i><i class="fa fa-ellipsis-h fa-2x fa-disabled" data-bbName="hr"></i><i class="fa fa-picture-o fa-2x fa-disabled" data-bbName="img"></i><i class="fa fa-youtube fa-2x fa-disabled" data-bbName="video"></i><i class="fa fa-skype fa-2x fa-disabled" data-bbName="skype"></i><i class="fa fa-instagram fa-2x fa-disabled" data-bbName="ig"></i><i class="fa fa-link fa-2x fa-disabled" data-bbName="link"></i><i class="fa fa-list-ul fa-2x fa-disabled" data-bbName="bullist"></i><i class="fa fa-list-ol fa-2x fa-disabled" data-bbName="numlist"></i><i class="fa fa-font fa-2x fa-disabled" data-bbName="fontcolor"></i><i class="fa fa-text-height fa-2x fa-disabled" data-bbName="fontsize"></i><i class="fa fa-font fa-2x fa-disabled" data-bbName="fontfamily"></i><i class="fa fa-align-left fa-2x fa-disabled" data-bbName="justifyleft"></i><i class="fa fa-align-center fa-2x fa-disabled" data-bbName="justifycenter"></i><i class="fa fa-align-right fa-2x fa-disabled" data-bbName="justifyright"></i><i class="fa fa-smile-o fa-2x fa-disabled" data-bbName="emotes"></i><i class="fa fa-quote-right fa-2x fa-disabled" data-bbName="quote"></i><i class="fa fa-code fa-2x fa-disabled" data-bbName="code"></i><i class="fa fa-envelope fa-2x fa-disabled" data-bbName="pmme"></i><i class="fa fa-folder fa-2x fa-disabled" data-bbName="spoiler"></i><i class="fa fa-trash fa-2x fa-disabled" data-bbName="removeformat"></i></td></tr></tr>',
     
     
     initForm: function() {
@@ -37,6 +37,15 @@ var settings = {
         if (settings.useAutocorrect)
             $("input[type='checkbox'][name='useAutocorrect']").attr("checked", "checked");
         
+        
+        var tempButtons = settings.customButtons.split(","),
+            el;
+        for (var i = 0; i < tempButtons.length; i++) {
+            el = tempButtons[i];
+            $("i.fa[data-bbName='" + el + "']").toggleClass("fa-disabled");
+        }
+        
+        settings.changeButtons();
     },
     
     saveForm: function() {
@@ -48,14 +57,34 @@ var settings = {
             GM_setValue($(this).attr("name"), false);
         });         
         
+        GM_setValue("customButtons", settings.customButtons);
+        
         $("#quick_reply_form table thead tr:gt(0)").remove();
         $("a[href='#settings']").html("Live Editor Settings");
+    },
+    
+    changeButtons: function() {        
+        var bbName,
+            tempButtons = settings.customButtons.split(",");
+        
+        $(".tcat i.fa").on("click", function() {
+            $(this).toggleClass("fa-disabled");
+            bbName = $(this).attr("data-bbName");
+            tempButtons.remove(bbName);
+            settings.customButtons = tempButtons.toString();
+        });
+        
+        $("#resetCustomButtons").on("click", function() {
+            GM_setValue("customButtons", "bold,italic,underline,strike,hr,|,img,video,skype,ig,link,|,bullist,numlist,|,fontcolor,fontsize,fontfamily,|,justifyleft,justifycenter,justifyright,|,emotes,quote,code,pmme,spoiler,removeformat");
+            location.reload();
+        });
     }
 }
 
 var wbbOpt = {
     hotkeys: settings.useHotkeys, 
     showHotkeys: settings.useHotkeys,
+    
     
     buttons: settings.customButtons,
     allButtons: {
@@ -95,6 +124,29 @@ var wbbOpt = {
         justifycenter: {
             transform: {
                 '<p style="text-align:center">{SELTEXT}</p>': '[align=center]{SELTEXT}[/align]'
+            }
+        },
+        fontfamily: {
+            type: 'select',
+            title: CURLANG.fontfamily,
+            excmd: 'fontName',
+            valueBBname: "font",
+            options: [
+                {title: "Arial", exvalue: "Arial"},
+                {title: "Comic Sans MS",exvalue: "Comic Sans MS"},
+                {title: "Consolas", exvalue: "Consolas"},
+                {title: "Courier New", exvalue: "Courier New"},
+                {title: "Georgia", exvalue: "Georgia"},
+                {title: "Lucida Sans Unicode", exvalue: "Lucida Sans Unicode"},
+                {title: "Monaco", exvalue: "Monaco"},
+                {title: "Monospace", exvalue: "Monospace"},
+                {title: "Tahoma", exvalue: "Tahoma"},
+                {title: "Times New Roman", exvalue: "Times New Roman"},
+                {title: "Trebuchet MS", exvalue: "Trebuchet MS"},
+                {title: "Verdana", exvalue: "Verdana"}
+            ],
+            transform: {
+                '<font face="{FONT}">{SELTEXT}</font>':'[font={FONT}]{SELTEXT}[/font]'
             }
         },
         fs_verysmall: {
@@ -156,7 +208,7 @@ var wbbOpt = {
         },
         quote: {
             transform : { 
-                '<blockquote><cite>AUTHOR Wrote: POST_ID</cite>{SELTEXT}</blockquote>':"[quote='AUTHOR' pid='PID']{SELTEXT}[/quote]"
+                '<blockquote>{SELTEXT}</blockquote>':"[quote]{SELTEXT}[/quote]"
             }
         },
         skype: {
@@ -428,4 +480,15 @@ $(document).ready(function() {
             }
         });
     });
+    
+    Array.prototype.remove = function() {
+        var what, a = arguments, L = a.length, ax;
+        while (L && this.length) {
+            what = a[--L];
+            while ((ax = this.indexOf(what)) !== -1) {
+                this.splice(ax, 1);
+            }
+        }
+        return this;
+    };
 });
