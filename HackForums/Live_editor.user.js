@@ -8,7 +8,7 @@
 // @require     http://cdn.wysibb.com/js/jquery.wysibb.min.js
 
 // @downloadURL https://github.com/hashlabxyz/Userscripts/raw/master/HackForums/Live_editor.user.js
-// @version     0.1.10
+// @version     0.1.11
 
 // @grant       GM_getValue
 // @grant       GM_setValue
@@ -254,11 +254,11 @@ var wbbOpt = {
                 '<hr>':"[hr]"
             }
         },
-		emotes: {
-			type: 'select',
+        emotes: {
+            type: 'select',
             title: "Add emotes",
-			options: "emote_pinch,emote_victoire,emote_hehe,emote_oui,emote_pleure,emote_ohmy,emote_blink,emote_superman,emote_nono,emote_biggrin,emote_sad,emote_unsure,emote_glare,emote_roflmao,emote_devlish,emote_rolleyes,emote_cool,emote_gratte,emote_confused,emote_bh,emote_ninja,emote_blush,emote_lipssealed,emote_yeye,emote_non,emote_smile,emote_whistle,emote_sleep,emote_evilgrin,emote_omg,emote_tongue,emote_mad,emote_huh,emote_thumbsup,emote_wacko,emote_pirate"
-		},
+            options: "emote_pinch,emote_victoire,emote_hehe,emote_oui,emote_pleure,emote_ohmy,emote_blink,emote_superman,emote_nono,emote_biggrin,emote_sad,emote_unsure,emote_glare,emote_roflmao,emote_devlish,emote_rolleyes,emote_cool,emote_gratte,emote_confused,emote_bh,emote_ninja,emote_blush,emote_lipssealed,emote_yeye,emote_non,emote_smile,emote_whistle,emote_sleep,emote_evilgrin,emote_omg,emote_tongue,emote_mad,emote_huh,emote_thumbsup,emote_wacko,emote_pirate"
+        },
         emote_pinch: {
             transform: {
                 '<img src="images/smilies/pinch.gif">':':pinch:'
@@ -469,6 +469,11 @@ $(document).ready(function() {
     $("body").on("keydown", function(e) {
         if (e.key === "Tab" || e.keyCode === "9" || e.which === "9") {
             $("#quick_reply_submit").focus();
+        }
+        else if (e.keyCode === 83 && e.altKey) {
+            message = $("#message").bbcode();
+            $("#message").val(message);
+            $("#quick_reply_submit").click();
         }
     });
     
