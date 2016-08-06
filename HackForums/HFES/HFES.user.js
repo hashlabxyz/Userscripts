@@ -1,11 +1,10 @@
 // ==UserScript==
-// @name        HF Enhancement Suite
-// @author      Emylbus
-// @uploader    Hash G.
+// @name        HF Enhancement Suite - v2.0
+// @author      Emylbus, Hash G.
 // @namespace   http://www.sublyme.net
 // @description This userscript defines general enhancement tweaks that apply to the entire HackForums site.
 // @include     *hackforums.net/*
-// @version     0.51
+// @version     0.52
 // @downloadURL https://raw.githubusercontent.com/hashlabxyz/Userscripts/master/HackForums/HFES/HFES.user.js
 // @grant       GM_addStyle
 // @grant       GM_xmlhttpRequest
@@ -1893,20 +1892,20 @@ function addDonorPerksThread(donorList){
         
         if(donorKeys.indexOf(uid) != -1){
             if(donorList[uid][0]=='g'){
-                donorStar = "<span class='HFES_Star'><img src='http://sublyme.net/site_media/hfesdonorstuff/happystar.png' title='"+donorList[uid][2]+"'></img></span>";
+                donorStar = "<span class='HFES_Star'><img src='https://raw.githubusercontent.com/hashlabxyz/Userscripts/master/HackForums/HFES/images/donors/happystar.png' title='"+donorList[uid][2]+"'></img></span>";
                 if(donorList[uid][1] != ''){
                     donorStar = "<a href='"+donorList[uid][1]+"'>"+donorStar+"</a>";
                 }
                 
                 $(posts[i]).prepend(donorStar);
             }else if(donorList[uid][0]=='s'){
-                donorStar = "<span class='HFES_Star'><img src='http://sublyme.net/site_media/hfesdonorstuff/alert.png' title='"+donorList[uid][2]+"'></img></span>";
+                donorStar = "<span class='HFES_Star'><img src='https://raw.githubusercontent.com/hashlabxyz/Userscripts/master/HackForums/HFES/images/donors/alert.png' title='"+donorList[uid][2]+"'></img></span>";
                 if(donorList[uid][1] != ''){
                     donorStar = "<a href='"+donorList[uid][1]+"'>"+donorStar+"</a>";
                 }
                 $(posts[i]).prepend(donorStar);
             }else if(donorList[uid][0]=='d'){
-                donorStar = "<span class='HFES_Star' style='margin-right:4px'><img src='http://sublyme.net/site_media/hfesdonorstuff/developer.png' title='"+donorList[uid][2]+"'></img></span>";
+                donorStar = "<span class='HFES_Star' style='margin-right:4px'><img src='https://raw.githubusercontent.com/hashlabxyz/Userscripts/master/HackForums/HFES/images/donors/developer.png' title='"+donorList[uid][2]+"'></img></span>";
                 if(donorList[uid][1] != ''){
                     donorStar = "<a href='"+donorList[uid][1]+"'>"+donorStar+"</a>";
                 }
@@ -1941,19 +1940,19 @@ function addDonorPerksProfile(donorList){
     if(donorKeys.indexOf(uid) != -1){
         var donorStar;
         if(donorList[uid][0]=='g'){
-            donorStar = "<span class='HFES_Star'><img src='http://sublyme.net/site_media/hfesdonorstuff/happystar.png' title='"+donorList[uid][2]+"'></img></span>";
+            donorStar = "<span class='HFES_Star'><img src='https://raw.githubusercontent.com/hashlabxyz/Userscripts/master/HackForums/HFES/images/donors/happystar.png' title='"+donorList[uid][2]+"'></img></span>";
             if(donorList[uid][1] != ''){
                 donorStar = "<a href='"+donorList[uid][1]+"'>"+donorStar+"</a>";
             }
             $($('.largetext strong span')[0].parentNode).prepend(donorStar);
         }else if(donorList[uid][0]=='s'){
-            donorStar = "<span class='HFES_Star'><img src='http://sublyme.net/site_media/hfesdonorstuff/alert.png' title='"+donorList[uid][2]+"'></img></span>";
+            donorStar = "<span class='HFES_Star'><img src='https://raw.githubusercontent.com/hashlabxyz/Userscripts/master/HackForums/HFES/images/donors/alert.png' title='"+donorList[uid][2]+"'></img></span>";
             if(donorList[uid][1] != ''){
                 donorStar = "<a href='"+donorList[uid][1]+"'>"+donorStar+"</a>";
             }
             $($('.largetext strong span')[0].parentNode).prepend(donorStar);
         }else if(donorList[uid][0]=='d'){
-            donorStar = "<span class='HFES_Star' style='margin-right:4px'><img src='http://sublyme.net/site_media/hfesdonorstuff/developer.png' title='"+donorList[uid][2]+"'></img></span>";
+            donorStar = "<span class='HFES_Star' style='margin-right:4px'><img src='https://raw.githubusercontent.com/hashlabxyz/Userscripts/master/HackForums/HFES/images/donors/developer.png' title='"+donorList[uid][2]+"'></img></span>";
             if(donorList[uid][1] != ''){
                 donorStar = "<a href='"+donorList[uid][1]+"'>"+donorStar+"</a>";
             }
@@ -1984,7 +1983,7 @@ function addDonorPerksProfile(donorList){
 function getDonorList(){
     GM_xmlhttpRequest({
         method: "GET",
-        url: "http://sublyme.net/site_media/HFESdonor.txt"+ "?nc=" + Math.random(),
+        url: "https://raw.githubusercontent.com/hashlabxyz/Userscripts/master/HackForums/HFES/donors.txt"+ "?nc=" + Math.random(),
         onload: function(response){
             var reslines, templine, i, j, donorMap = {};
             reslines = response.responseText.split('\n');
