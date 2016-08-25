@@ -1937,6 +1937,7 @@ function addDonorPerksProfile(donorList){
     var uid, i, oldbar, donorKeys, src, title;
     donorKeys = Object.keys(donorList);
     uid = document.URL.split('&uid=')[1].split('&')[0];
+
     if(donorKeys.indexOf(uid) != -1){
         var donorStar;
         if(donorList[uid][0]=='g'){
@@ -1964,15 +1965,16 @@ function addDonorPerksProfile(donorList){
         }else if(donorList[uid][3] =='gilded' || donorList[uid][3] =='gilded2'){
             var topbar;
             $($('.tborder')[0]).attr('style','background-color:#ddc700;');
+            $($('.tborder')[0]).attr('style','border:1px solid #ddc700 !important;');
             //$($('.tborder')[0]).attr('title','[HFES] Gilded Supporter');
         }else{}
         
         if(donorList[uid][4] == 'g'){
             if($(".largetext strong span").length == 3){
-                $($('.largetext strong span')[0]).attr("style","background-image:url('http://sublyme.net/site_media/images/shinyname.gif')");
+                $($('.largetext strong span')[0]).attr("style","background-image:url('https://raw.githubusercontent.com/hashlabxyz/Userscripts/master/HackForums/HFES/images/donors/shinyname.gif')");
                 $($('.largetext strong span')[0]).attr("title","[HFES] Shiny Supporter");
             }else if($(".largetext strong span").length == 4){
-                $($('.largetext strong span')[1]).attr("style","background-image:url('http://sublyme.net/site_media/images/shinyname.gif')");
+                $($('.largetext strong span')[1]).attr("style","background-image:url('https://raw.githubusercontent.com/hashlabxyz/Userscripts/master/HackForums/HFES/images/donors/shinyname.gif')");
                 $($('.largetext strong span')[1]).attr("title","[HFES] Shiny Supporter");
             }
             
