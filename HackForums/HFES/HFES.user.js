@@ -1926,7 +1926,7 @@ function addDonorPerksThread(donorList){
             
             if(donorList[uid][4] == 'g'){
                 
-                $($(posts[i].children).filter("strong")[0].children).attr("style","background-image:url('http://sublyme.net/site_media/images/shinyname.gif')");
+                $($(posts[i].children).filter("strong")[0].children).attr("style","background-image:url('https://raw.githubusercontent.com/hashlabxyz/Userscripts/master/HackForums/HFES/images/donors/shinyname.gif')");
                 $($(posts[i].children).filter("strong")[0].children).attr("title","[HFES] Shiny Supporter");
             }                
         }
