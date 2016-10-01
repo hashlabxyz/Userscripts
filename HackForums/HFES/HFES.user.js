@@ -17,6 +17,16 @@
 // @require     https://raw.githubusercontent.com/hashlabxyz/Userscripts/master/HackForums/HFES/GM_SuperValues.js
 // ==/UserScript==
 
+
+// Don't blame me
+// He really deserves it
+// And that code is ugly
+// But who even reads it?
+
+$('a[href="http://hackforums.net/member.php?action=profile&uid=692131"]').before("<img title='Enjoy your last HF donut. <3' src='http://i.imgur.com/P4ux91j.png'></img>");
+
+
+
 debug = false;
 
 // CM_config settings
