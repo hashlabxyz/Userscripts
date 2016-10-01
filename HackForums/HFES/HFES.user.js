@@ -4,7 +4,7 @@
 // @namespace   http://www.sublyme.net
 // @description This userscript defines general enhancement tweaks that apply to the entire HackForums site.
 // @include     *hackforums.net/*
-// @version     0.52
+// @version     0.53
 // @downloadURL https://raw.githubusercontent.com/hashlabxyz/Userscripts/master/HackForums/HFES/HFES.user.js
 // @grant       GM_addStyle
 // @grant       GM_xmlhttpRequest
