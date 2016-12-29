@@ -43,58 +43,72 @@ function totalAvgSiteStats() {
 function forumCountStats() {
     var total  = [[0, 0], [0, 0], [0, 0], [0, 0], [0, 0], [0, 0], [0, 0],
                   [0, 0], [0, 0], [0, 0]],
-        result = "";
+        result = "",
+        lr     = "";
+    var lounge,
+        ranf;
 
     $("div[id*='tabmenu_']").each(function(tabmenu) {
         $(this).find(`table tbody[id*='cat_']
                       tr td:nth-child(3)`).each(function(i) {
             switch (tabmenu) {
                 case 0:
-                    total[0] = addValues(total[0], $(this).html());
+                    total[0] = fcs_addValues(total[0], $(this).html());
                     break;
                 case 1:
-                    total[1] = addValues(total[1], $(this).html());
+                    total[1] = fcs_addValues(total[1], $(this).html());
                     break;
                 case 2:
-                    total[0] = addValues(total[0], $(this).html());
+                    total[0] = fcs_addValues(total[0], $(this).html());
                     break;
                 case 3:
-                    total[2] = addValues(total[2], $(this).html());
+                    total[2] = fcs_addValues(total[2], $(this).html());
                     break;
                 case 4:
-                    total[3] = addValues(total[3], $(this).html());
+                    total[3] = fcs_addValues(total[3], $(this).html());
                     break;
                 case 5:
-                    total[7] = addValues(total[7], $(this).html());
+                    total[7] = fcs_addValues(total[7], $(this).html());
                     break;
                 case 6:
-                    total[8] = addValues(total[8], $(this).html());
+                    total[8] = fcs_addValues(total[8], $(this).html());
                     break;
                 case 7:
-                    total[9] = addValues(total[9], $(this).html());
+                    total[9] = fcs_addValues(total[9], $(this).html());
                     break;
                 case 8:
-                    total[6] = addValues(total[6], $(this).html());
+                    total[6] = fcs_addValues(total[6], $(this).html());
                     break;
                 case 9:
-                    total[4] = addValues(total[4], $(this).html());
+                    total[4] = fcs_addValues(total[4], $(this).html());
                     break;
-                case 10:
-                    total[5] = addValues(total[5], $(this).html());
+                case 10:        // Groups
+                    if (total[5][0] === 0 || total[5][1] === 0)
+                        total[5] = fcs_addValues(total[5], $(this).html());
                     break;
             }
         })
     })
+
+    // RANF & Lounge
+    lounge = $("#cat_7_e > tr:nth-child(2) > td:nth-child(3)").html();
+    ranf = $("#cat_1_e > tr:nth-child(2) > td:nth-child(3)").html();
+    lr += lounge.replace(/(.*)<br>.*/, "$1").replace(/,/g, "") + ":";
+    lr += lounge.replace(/.*<br>(.*)/, "$1").replace(/,/g, "") + ":";
+    lr += ranf.replace(/(.*)<br>.*/, "$1").replace(/,/g, "") + ":";
+    lr += ranf.replace(/.*<br>(.*)/, "$1").replace(/,/g, "") + ":";
+    result += lr;
+
     for (let i = 0; i < 10; i++)
         result += total[i][0] + ":" + total[i][1] + ":";
 
-    return result.substring(0, result.length - 1);
+    return result.substring(0, result.length - 1);;
 }
 
-function addValues(array, toAdd) {
+function fcs_addValues(array, toAdd) {
     if (toAdd.charAt(0) == '<' || toAdd.charAt(0) == '-')
         return array;
-    array[0] += parseInt(toAdd.replace(/(.*)<br>.*/, "$1").replace(",", ""));
-    array[1] += parseInt(toAdd.replace(/.*<br>(.*)/, "$1").replace(",", ""));
+    array[0] += parseInt(toAdd.replace(/(.*)<br>.*/, "$1").replace(/,/g, ""));
+    array[1] += parseInt(toAdd.replace(/.*<br>(.*)/, "$1").replace(/,/g, ""));
     return array;
 }
